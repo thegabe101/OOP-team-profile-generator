@@ -20,7 +20,12 @@ module.exports = teamMembers;
 
 //need to write file asynchronously. this will use both fs and util + promisfy
 
-const writeFileAsync = util.promisify(fs.writeFile);
+//const writeFileAsync = util.promisify(fs.writeFile);
+
+const writeFile = (data) => {
+    fs.writeFile('./index.html', data, (err) =>
+        err ? console.error(err) : console.log('file written successfully'))
+};
 
 const promptSelf = () => {
     return inquirer.prompt([
@@ -91,7 +96,7 @@ const promptInquirer = () => {
                     addIntern();
                     break;
                 default: 
-                    generateTeam();
+                    writeFile(generateTeam(teamMembers));
                     console.log('Your team is complete.')
                     break;
             }
@@ -390,11 +395,17 @@ const initialize = () => {
     promptSelf()
     //inquirer is started
     //now called back to find data and write file + generate html, which is complete above
-    .then((teamMembers) => writeFileAsync(outputpath, generateTeam(teamMembers)))
-    //should give use our file with generated team outside of template literal/prompt combo
-    //can log to just check file written successfully, as per usual
-    .then(() => console.log('file written'))
-    .catch((err) => console.log(err));
+    //.then implies that writefilesync depends UPON promptself (need to ensure youre)
+    //put write fileasync in its own function that is building the team 
+    //calling building team 
+    //what is a promise? what if we DONT have original value of a variable? dont yet know the value because it may be depending on a user input, etc, something that doesn't exist yet
+    //promise gives a way around that problem (via .then, async, etc. we want this value but it doesnt exist YET, but its going to and we want it)
+    // .then((answers) => writeFileAsync(outputpath, generateTeam(answers)))
+    // //generate team needs to depend on other values than just promptself... look at triggering off of build team 
+    // //should give use our file with generated team outside of template literal/prompt combo
+    // //can log to just check file written successfully, as per usual
+    // .then(() => console.log('file written'))
+    // .catch((err) => console.log(err));
 };
 
 //lastly, we call our initialize function to kick things off
