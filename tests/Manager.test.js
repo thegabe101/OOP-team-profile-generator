@@ -1,40 +1,20 @@
-const Manager = require('./lib/Manager');
+const Manager = require("../lib/Manager");
+const Employee = require("../lib/Employee");
 
-describe('Manager', () => {
+test("Can set office number via constructor argument", () => {
+  const testValue = 100;
+  const e = new Manager("Foo", 1, "test@test.com", testValue);
+  expect(e.officeNumber).toBe(testValue);
+});
 
-    describe('getName', () => {
-        it('Should return the name of the parent object- the Managers name', () => {
-                const name = "Paul";
-                expect(name).toEqual(Manager.name);
-        });
-    });
+test('getRole() should return "Manager"', () => {
+  const testValue = "Manager";
+  const e = new Manager("Foo", 1, "test@test.com", 100);
+  expect(e.getRole()).toBe(testValue);
+});
 
-
-    describe('getId', () => {
-        it('Should return the ID of the parent object- the Managers ID', () => {
-                const id = 12;
-                expect(id).toEqual(Manager.id);
-        });
-    });
-
-    describe('getEmail', () => {
-        it('Should return the email of the parent object- the Managers email', () => {
-                const email = 'themanager@hotmail.com';
-                expect(email).toEqual(Manager.email);
-        });
-    });
-
-    describe('getRole', () => {
-        it('Should return the role of the parent object- the Managers role', () => {
-                const role = 'Manager';
-                expect(role).toEqual(Manager.role);
-        });
-    });
-
-    describe('getSchool', () => {
-        it('Should return the school of the parent object- the Managers office number', () => {
-                const officeNumber = 5;
-                expect(officeNumber).toEqual(Manager.officeNumber);
-        });
-    });
+test("Can get office number via getOffice()", () => {
+  const testValue = 100;
+  const e = new Manager("Foo", 1, "test@test.com", testValue);
+  expect(e.getOfficeNumber()).toBe(testValue);
 });
