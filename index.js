@@ -1,14 +1,14 @@
 //will immediately specify requirements. require should include fs, inquirer, not sure what else.
-const fs = require('fs');
-const inquirer = require('inquirer');
 // const util = require('util');
 //util unecessary to require if I am requiring generateHtml under a const later
-const path = require('path');
-const output_dir = path.resolve(__dirname, "output");
 // const outputpath = path.join(output_dir, "generatedTeam.html");
-const teamMembers = [];
 //classes will be pulled from /lib folder. necessary classes include Manager, Intern, Engineer. employee will be constructor class?
 //classes should be capitalized
+// const path = require('path');
+// const output_dir = path.resolve(__dirname, "output");
+const fs = require('fs');
+const inquirer = require('inquirer');
+const teamMembers = [];
 const Employee = require('./lib/Employee');
 const Manager = require('./lib/Manager');
 const Intern = require('./lib/Intern');
@@ -24,13 +24,32 @@ module.exports = teamMembers;
 //unclear to me still whether I need to convert promptSelf to an async function. Going to ask tutor today. 
 //const writeFileAsync = util.promisify(fs.writeFile);
 
+
+//took path without async to write file since write function can simply wait until all user input is complete before attempting write anyways. 
 const writeFile = (data) => {
-    fs.writeFile('./index.html', data, (err) =>
+    fs.writeFile('./yourTeam.html', data, (err) =>
         err ? console.error(err) : console.log('file written successfully'))
 };
 
+
+//adjusted prompt self function to reflect user input and trigger other adds from here
 const promptSelf = () => {
     return inquirer.prompt([
+        {
+            type: 'list',
+            name: 'role',
+            message: 'What is your role at the company?',
+            choices: ['Manager', 'Engineer', 'Intern'],
+            validate: roleChosen => {
+                if (roleChosen === 'Manager') {
+                    return addManager();
+                } else if (roleChosen === 'Engineer') {
+                    return addEngineer();
+                } else {
+                    return addIntern();
+                }
+            }
+        },
         {
             type: 'input',
             name: 'name',
@@ -69,7 +88,8 @@ const promptSelf = () => {
             }
         }
     ]).then(answers => {
-        const employeeSelf = new Employee(answers.name, answers.employeeId, answers.email);
+        //employeeSelf is added to array as person actually taking the survey. This assumes, functionally, that they work at the company, which could be awkward but it is worded in a way that tries to make it make sense. 
+        const employeeSelf = new Employee(answers.name, answers.employeeId, answers.email, answers.role);
         teamMembers.push(employeeSelf)
         promptInquirer();
     })
@@ -187,7 +207,7 @@ const promptInquirer = () => {
             {
                 type: 'input',
                 name: 'id',
-                message: 'What is your managers id? (Required)',
+                message: 'What is your engineers id? (Required)',
                 validate: engineerId => {
                     if (engineerId) {
                         return true;
@@ -199,7 +219,7 @@ const promptInquirer = () => {
             {
                 type: 'input',
                 name: 'email',
-                message: 'What is your managers email? (Required)',
+                message: 'What is your engineers email? (Required)',
                 validate: engineerEmail => {
                     if (engineerEmail) {
                         return true;
@@ -282,7 +302,7 @@ const promptInquirer = () => {
                 }
             }
         ]).then(answers => {
-            const intern = new Intern(answers.name, answers.id, answers.email, answers.officeNumber);
+            const intern = new Intern(answers.name, answers.id, answers.email, answers.school);
             teamMembers.push(intern);
             promptInquirer();
         })

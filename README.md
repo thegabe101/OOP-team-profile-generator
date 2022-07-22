@@ -4,10 +4,10 @@
 
 - [Description](#description)
 - [Installation](#installation)
-- [Credits](#credits)
 - [Usage](#Usage)
 - [Bugs](#Bugs)
 - [Screenshots](#screenshots)
+- [Credits](#credits)
 
 ## Description
 
@@ -24,15 +24,20 @@ This project involved creating a terminal app that would execute via inquirer in
 
 ## Usage
 
-- Using this website is fairly straightforward. To do so, the user right clicks index.js and selects "run in integrated terminal," should they be using a code explorer such as VS or Atom. Once the terminal is running and the npm requirements installed, the user may enter "node index.js" in order to initialize the prompts. Once that step is complete and the user has entered in required information on their own employee information + manager, intern, and engineer, an html file will be generated within the OOP-team-profile-generator folder. This HTML file can be executed in a traditional manner, and the information located within the employee cards should be filled in with the inquirer information entered at user-execution.
+- In order to utilize this project, the user should expect to work from within the command line in a node. After opening an integrated terminal within the OOP Team Generator folder, they can run 'node index.js' and begin inquirer prompts. The user follows a series of prompts that will assume they work at a company with several roles (including asking their own role, which will auto fill as employee). Once the user is finished entering information about themselves and their coworkers, an html file named 'yourTeam.html' will be generated. This html file will display parameters for each employee input by the user in the command line prompt.
 
 ## Bugs
 
-- While there are no known "bugs" afflicting the page, functionality is far from perfect. Users should know:
-
-- There is currently no traditional "delete" or "clear" button to clear items from local storage. In order to clear an input field, a user must delete the content present and save an empty field to return the row to "default."
-- Each save button corresponds with its own row. This means that entering text on row 3 and clicking save on row 8 will not save the text in row 3. The user must click the corresponding button to the row in order to save their input.
+- There are no known major bugs afflicting the program. However, the initial prompt called lines 38-52 that asks the user for their role at the company is not functioning correctly. The inquirer prompts will proceed regardless of what is entered, and user input on their own role does not change their employee card generated in the final html.
 
 ## Screenshots
 
-- ![Alt= Screenshot showing the page, which includes a title, date, and rows in which the user can input to dos and notes.](screenshot1.jpg)
+- ![Alt= Screenshot showing file explorer in VS code for the project.](./screenshots/screenshot1.jpg)
+- ![Alt= Screenshot showing how the user opens the integrated terminal.](./screenshots/screenshot2.jpg)
+- ![Alt= Screenshot showing running of node.js in command line and the beginning of inquirer.](./screenshots/screenshot3.jpg)
+- ![Alt= Screenshot showing completion of inquirer and generated document.](./screenshots/screenshot4.jpg)
+- ![Alt= Screenshot showing final resulting html document in default browser.](./screenshots/screenshot5.jpg)
+
+## Credits
+
+- This project could not have been completed without the hardwork and excellent advice of my educators at UW Fullstack and tutor, Jacob Carver.

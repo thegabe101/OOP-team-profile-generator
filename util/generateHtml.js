@@ -12,6 +12,25 @@
 // create the team
 const generateTeam = team => {
 
+//added generate self for beginning of prompt; when user gives input on self, their card will be generated from this function that is part of genTeam
+    const generateEmployeeSelf = employee => {
+        return `
+        <div class="card employee-card">
+        <div class="card-header">
+            <h2 class="card-title">${employee.getName()}</h2>
+            <h3 class="card-title"><i class="fas fa-mug-hot mr-2"></i>${employee.getRole()}</h3>
+        </div>
+        <div class="card-body">
+            <ul class="list-group">
+                <li class="list-group-item">ID: ${employee.getId()}</li>
+                <li class="list-group-item">Email: <a href="mailto:${employee.getEmail()}">${employee.getEmail()}</a></li>
+                <li class="list-group-item">Role: ${employee.getRole()}</li>
+            </ul>
+        </div>
+    </div>
+        `;
+    };
+
     // create the manager html
     const generateManager = manager => {
         return `
@@ -71,6 +90,11 @@ const generateTeam = team => {
 
     const html = [];
 
+    html.push(team
+        .filter(employee => employee.getRole() === "Employee")
+        .map(employee => generateEmployeeSelf(employee))
+        .join("")
+    );
     html.push(team
         .filter(employee => employee.getRole() === "Manager")
         .map(manager => generateManager(manager))
